@@ -37,7 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MovieDetailFragment extends Fragment implements View.OnClickListener {
+public class MovieDetailFragment extends Fragment  {
 
     public MovieDetailFragment() {
 
@@ -50,19 +50,21 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
     ReviewAdapter mReviewAdapter;
 
     MovieData currentMovie;
-    public ArrayList<MovieData> mFavorites = null;
+    ArrayList<MovieData> mFavoritesArrayList = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        if (savedInstanceState == null || !savedInstanceState.containsKey("reviews")) {
+        if (savedInstanceState == null || !savedInstanceState.containsKey("reviews") || !savedInstanceState.containsKey("movies") || !savedInstanceState.containsKey("favorites")) {
             reviewDataArrayList = new ArrayList<ReviewData>();
             trailerDataArrayList = new ArrayList<TrailerData>();
+            mFavoritesArrayList = new ArrayList<MovieData>();
         } else {
             reviewDataArrayList = savedInstanceState.getParcelableArrayList("reviews");
             trailerDataArrayList = savedInstanceState.getParcelableArrayList("trailers");
+            mFavoritesArrayList = savedInstanceState.getParcelableArrayList("favorites");
         }
     }
 
@@ -71,7 +73,7 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("reviews", reviewDataArrayList);
         outState.putParcelableArrayList("trailers", trailerDataArrayList);
-        outState.putParcelableArrayList("favorites", mFavorites);
+        outState.putParcelableArrayList("favorites", mFavoritesArrayList);
     }
 
     @Override
@@ -84,10 +86,12 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
 
         final Button favorites = (Button) rootView.findViewById(R.id.favorite_button);
 
-        favorites.setOnClickListener(new View.OnClickListener() {
+        favorites.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFavorites.add(currentMovie);
+                mFavoritesArrayList.add(currentMovie);
+                Intent intent = new Intent(getContext(), MovieImageFragment.class);
+                intent.putExtra("favorites", mFavoritesArrayList);
             }
         });
 
@@ -364,10 +368,5 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
         protected void onPostExecute(ArrayList<TrailerData> trailerDatas) {
             mTrailerAdapter.updateTrailerData(trailerDatas);
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }

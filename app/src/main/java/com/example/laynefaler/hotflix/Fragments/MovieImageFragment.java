@@ -51,6 +51,7 @@ public class  MovieImageFragment extends Fragment {
             MovieDataArrayList = new ArrayList<MovieData>();
         } else {
             MovieDataArrayList = savedInstanceState.getParcelableArrayList("movies");
+            FavoritesArrayList = savedInstanceState.getParcelableArrayList("favorites");
         }
     }
 
@@ -58,6 +59,7 @@ public class  MovieImageFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("movies", MovieDataArrayList);
+        outState.putParcelableArrayList("favorites", FavoritesArrayList);
     }
 
     private void updateImages() {
