@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context="com.example.laynefaler.hotflix.Fragments.MovieImageFragment">
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:id="@+id/main_gridview"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:columnWidth="125dp" />
+
+</RelativeLayout>

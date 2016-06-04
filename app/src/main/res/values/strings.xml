@@ -1,0 +1,22 @@
+<resources>
+
+    <string name="app_name">Hotflix</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_settings">SettingActivity</string>
+
+    <string name="movieKey">movie_key</string>
+    <string name="movieTitle">Movie Types</string>
+
+    <string name="arrayPopular">Popular</string>
+    <string name="arrayTopRated">Top Rated</string>
+    <string name="arrayFavorite">Favorites</string>
+
+    <string name="arrayPopularValue">popular</string>
+    <string name="arrayTopRatedValue">top_rated</string>
+    <string name="arrayFavoriteValue">favorites</string>
+
+    <string name="sync_account_type">hotflix.com</string>
+    <string name="content_authority">com.example.laynefaler.hotflix</string>
+
+</resources>
