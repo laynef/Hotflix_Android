@@ -32,12 +32,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MovieImageFragment extends Fragment {
+public class  MovieImageFragment extends Fragment {
 
     private String LOG_TAG = MovieImageFragment.class.getSimpleName();
 
     ArrayList<MovieData> MovieDataArrayList = new ArrayList<MovieData>();
     ImageAdapter mMovieDataAdapter;
+    ArrayList<MovieData> FavoritesArrayList;
 
     public MovieImageFragment() {}
 
@@ -144,51 +145,104 @@ public class MovieImageFragment extends Fragment {
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             String sortOrder = prefs.getString(getString(R.string.movieKey), getString(R.string.arrayPopularValue));
-            String pop = sortOrder;
 
-            try {
-                final String MOVIE_URL_BASE = "http://api.themoviedb.org/3/movie/" + pop + "?";
-                final String API_PARAM = "api_key";
+            // Problem here
+            if  (!sortOrder.equals(prefs.getString(getString(R.string.movieKey), getString(R.string.arrayFavoriteValue)))) {
+                try {
+                    final String MOVIE_URL_BASE = "http://api.themoviedb.org/3/movie/" + sortOrder + "?";
+                    final String API_PARAM = "api_key";
 
-                Uri builtUri = Uri.parse(MOVIE_URL_BASE).buildUpon()
-                        .appendQueryParameter(API_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
-                        .build();
+                    Uri builtUri = Uri.parse(MOVIE_URL_BASE).buildUpon()
+                            .appendQueryParameter(API_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
+                            .build();
 
-                URL url = new URL(builtUri.toString());
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
+                    URL url = new URL(builtUri.toString());
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.connect();
 
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
+                    InputStream inputStream = urlConnection.getInputStream();
+                    StringBuffer buffer = new StringBuffer();
+                    if (inputStream == null) {
+                        return null;
+                    }
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line + "\n");
+                    }
+                    if (buffer.length() == 0) {
+                        return null;
+                    }
+                    singleMovieJsonStr = buffer.toString();
+
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "IOException", e);
                     return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-                if (buffer.length() == 0) {
-                    return null;
-                }
-                singleMovieJsonStr = buffer.toString();
-
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "IOException", e);
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(LOG_TAG, "Final IOException", e);
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (final IOException e) {
+                            Log.e(LOG_TAG, "Final IOException", e);
+                        }
                     }
                 }
-            }
+            } else {
+                try {
+                    final String MOVIE_URL_BASE = "http://api.themoviedb.org/3/movie";
+                    final String API_PARAM = "api_key";
+
+                    if (FavoritesArrayList.size() == 0 || FavoritesArrayList == null) {
+                        return null;
+                    }
+
+                    for (int i = 0; i < FavoritesArrayList.size(); i++) {
+                        Uri builtUri = Uri.parse(MOVIE_URL_BASE).buildUpon()
+                                .appendPath(FavoritesArrayList.get(i).getId())
+                                .appendQueryParameter(API_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
+                                .build();
+
+                        URL url = new URL(builtUri.toString());
+                        urlConnection = (HttpURLConnection) url.openConnection();
+                        urlConnection.setRequestMethod("GET");
+                        urlConnection.connect();
+
+                        InputStream inputStream = urlConnection.getInputStream();
+                        StringBuffer buffer = new StringBuffer();
+                        if (inputStream == null) {
+                            return null;
+                        }
+                        reader = new BufferedReader(new InputStreamReader(inputStream));
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            buffer.append(line + "\n");
+                        }
+                        if (buffer.length() == 0) {
+                            return null;
+                        }
+                        singleMovieJsonStr = buffer.toString();
+                    }
+
+                    }catch(IOException e){
+                        Log.e(LOG_TAG, "IOException", e);
+                        return null;
+                    }finally{
+                        if (urlConnection != null) {
+                            urlConnection.disconnect();
+                        }
+                        if (reader != null) {
+                            try {
+                                reader.close();
+                            } catch (final IOException e) {
+                                Log.e(LOG_TAG, "Final IOException", e);
+                            }
+                        }
+                    }
+                }
 
             try {
                 return getMovieImageFromJson(singleMovieJsonStr);
