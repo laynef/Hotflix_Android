@@ -145,50 +145,52 @@ public class  MovieImageFragment extends Fragment {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             String sortOrder = prefs.getString(getString(R.string.movieKey), getString(R.string.arrayPopularValue));
 
-                    try {
-                        final String MOVIE_URL_BASE = "http://api.themoviedb.org/3/movie/";
-                        final String API_PARAM = "api_key";
+            if (!sortOrder.equals(getString(R.string.arrayFavoriteValue))) {
+                try {
+                    final String MOVIE_URL_BASE = "http://api.themoviedb.org/3/movie/";
+                    final String API_PARAM = "api_key";
 
-                        Uri builtUri = Uri.parse(MOVIE_URL_BASE).buildUpon()
-                                .appendPath(sortOrder)
-                                .appendQueryParameter(API_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
-                                .build();
+                    Uri builtUri = Uri.parse(MOVIE_URL_BASE).buildUpon()
+                            .appendPath(sortOrder)
+                            .appendQueryParameter(API_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
+                            .build();
 
-                        URL url = new URL(builtUri.toString());
-                        urlConnection = (HttpURLConnection) url.openConnection();
-                        urlConnection.setRequestMethod("GET");
-                        urlConnection.connect();
+                    URL url = new URL(builtUri.toString());
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.connect();
 
-                        InputStream inputStream = urlConnection.getInputStream();
-                        StringBuffer buffer = new StringBuffer();
-                        if (inputStream == null) {
-                            return null;
-                        }
-                        reader = new BufferedReader(new InputStreamReader(inputStream));
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            buffer.append(line + "\n");
-                        }
-                        if (buffer.length() == 0) {
-                            return null;
-                        }
-                        singleMovieJsonStr = buffer.toString();
-
-                    } catch (IOException e) {
-                        Log.e(LOG_TAG, "IOException", e);
+                    InputStream inputStream = urlConnection.getInputStream();
+                    StringBuffer buffer = new StringBuffer();
+                    if (inputStream == null) {
                         return null;
-                    } finally {
-                        if (urlConnection != null) {
-                            urlConnection.disconnect();
-                        }
-                        if (reader != null) {
-                            try {
-                                reader.close();
-                            } catch (final IOException e) {
-                                Log.e(LOG_TAG, "Final IOException", e);
-                            }
+                    }
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line + "\n");
+                    }
+                    if (buffer.length() == 0) {
+                        return null;
+                    }
+                    singleMovieJsonStr = buffer.toString();
+
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "IOException", e);
+                    return null;
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (final IOException e) {
+                            Log.e(LOG_TAG, "Final IOException", e);
                         }
                     }
+                }
+            }
 
             try {
                 return getMovieImageFromJson(singleMovieJsonStr);
