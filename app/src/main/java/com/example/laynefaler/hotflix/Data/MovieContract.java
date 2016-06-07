@@ -72,14 +72,10 @@ public class MovieContract {
         public static final String TABLE_NAME = "trailers";
         // Foreign Key of Movie as movie_id
         public static final String COLUMN_MOVIE_ID = "movie_id";
-
-        public static final String COLUMN_TRAILER_ID = "id";
-        public static final String COLUMN_KEY = "key";
+        public static final String COLUMN_TRAILER_ID = "trailer_id";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_SITE = "site";
-        public static final String COLUMN_SIZE = "size";
-        public static final String COLUMN_TYPE = "type";
-        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_THUMBNAIL = "thumbnail";
 
         public static Uri buildMovieTrailerUri(long movieId) {
             return CONTENT_URI.buildUpon().appendPath(String.valueOf(movieId)).build();
@@ -104,12 +100,10 @@ public class MovieContract {
 
         // Foreign Key of Movie as movie_id
         public static final String COLUMN_MOVIE_ID = "movie_id";
-
-        public static final String COLUMN_REVIEW_ID = "id";
+        public static final String COLUMN_REVIEW_ID = "review_id";
         public static final String COLUMN_AUTHOR = "author";
         public static final String COLUMN_CONTENT = "content";
-        public static final String COLUMN_URL = "url";
-        public static final String COLUMN_DATE = "date";
+
 
         public static Uri buildMovieReviewsUri(long movieId) {
             return CONTENT_URI.buildUpon().appendPath(String.valueOf(movieId)).build();

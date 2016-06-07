@@ -38,7 +38,6 @@ public class  MovieImageFragment extends Fragment {
 
     ArrayList<MovieData> MovieDataArrayList = new ArrayList<MovieData>();
     ImageAdapter mMovieDataAdapter;
-    ArrayList<MovieData> FavoritesArrayList;
 
     public MovieImageFragment() {}
 
@@ -51,7 +50,6 @@ public class  MovieImageFragment extends Fragment {
             MovieDataArrayList = new ArrayList<MovieData>();
         } else {
             MovieDataArrayList = savedInstanceState.getParcelableArrayList("movies");
-            FavoritesArrayList = savedInstanceState.getParcelableArrayList("favorites");
         }
     }
 
@@ -59,7 +57,6 @@ public class  MovieImageFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("movies", MovieDataArrayList);
-        outState.putParcelableArrayList("favorites", FavoritesArrayList);
     }
 
     private void updateImages() {
@@ -133,8 +130,8 @@ public class  MovieImageFragment extends Fragment {
                 String id = movieImagePathObject.getString(MDB_ID);
 
                 MovieDataArrayList.add(new MovieData(imagePath, overview, title, date, rating, pop, id));
-
             }
+
             return MovieDataArrayList;
         }
 
@@ -148,63 +145,12 @@ public class  MovieImageFragment extends Fragment {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             String sortOrder = prefs.getString(getString(R.string.movieKey), getString(R.string.arrayPopularValue));
 
-            // Problem here
-            if  (!sortOrder.equals(prefs.getString(getString(R.string.movieKey), getString(R.string.arrayFavoriteValue)))) {
-                try {
-                    final String MOVIE_URL_BASE = "http://api.themoviedb.org/3/movie/" + sortOrder + "?";
-                    final String API_PARAM = "api_key";
+                    try {
+                        final String MOVIE_URL_BASE = "http://api.themoviedb.org/3/movie/";
+                        final String API_PARAM = "api_key";
 
-                    Uri builtUri = Uri.parse(MOVIE_URL_BASE).buildUpon()
-                            .appendQueryParameter(API_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
-                            .build();
-
-                    URL url = new URL(builtUri.toString());
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                    urlConnection.setRequestMethod("GET");
-                    urlConnection.connect();
-
-                    InputStream inputStream = urlConnection.getInputStream();
-                    StringBuffer buffer = new StringBuffer();
-                    if (inputStream == null) {
-                        return null;
-                    }
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        buffer.append(line + "\n");
-                    }
-                    if (buffer.length() == 0) {
-                        return null;
-                    }
-                    singleMovieJsonStr = buffer.toString();
-
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "IOException", e);
-                    return null;
-                } finally {
-                    if (urlConnection != null) {
-                        urlConnection.disconnect();
-                    }
-                    if (reader != null) {
-                        try {
-                            reader.close();
-                        } catch (final IOException e) {
-                            Log.e(LOG_TAG, "Final IOException", e);
-                        }
-                    }
-                }
-            } else {
-                try {
-                    final String MOVIE_URL_BASE = "http://api.themoviedb.org/3/movie";
-                    final String API_PARAM = "api_key";
-
-                    if (FavoritesArrayList.size() == 0 || FavoritesArrayList == null) {
-                        return null;
-                    }
-
-                    for (int i = 0; i < FavoritesArrayList.size(); i++) {
                         Uri builtUri = Uri.parse(MOVIE_URL_BASE).buildUpon()
-                                .appendPath(FavoritesArrayList.get(i).getId())
+                                .appendPath(sortOrder)
                                 .appendQueryParameter(API_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
                                 .build();
 
@@ -227,12 +173,11 @@ public class  MovieImageFragment extends Fragment {
                             return null;
                         }
                         singleMovieJsonStr = buffer.toString();
-                    }
 
-                    }catch(IOException e){
+                    } catch (IOException e) {
                         Log.e(LOG_TAG, "IOException", e);
                         return null;
-                    }finally{
+                    } finally {
                         if (urlConnection != null) {
                             urlConnection.disconnect();
                         }
@@ -244,7 +189,6 @@ public class  MovieImageFragment extends Fragment {
                             }
                         }
                     }
-                }
 
             try {
                 return getMovieImageFromJson(singleMovieJsonStr);
@@ -261,6 +205,5 @@ public class  MovieImageFragment extends Fragment {
         }
 
     } // end of task
-
 
 } // end of class

@@ -1,5 +1,6 @@
 package com.example.laynefaler.hotflix.Fragments;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.example.laynefaler.hotflix.Activities.DetailActivity;
 import com.example.laynefaler.hotflix.Adapters.ReviewAdapter;
 import com.example.laynefaler.hotflix.Adapters.TrailerAdapter;
+import com.example.laynefaler.hotflix.Data.MovieContract.MovieEntry;
 import com.example.laynefaler.hotflix.DataTypes.MovieData;
 import com.example.laynefaler.hotflix.DataTypes.ReviewData;
 import com.example.laynefaler.hotflix.DataTypes.TrailerData;
@@ -36,6 +38,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class MovieDetailFragment extends Fragment  {
 
@@ -45,26 +48,41 @@ public class MovieDetailFragment extends Fragment  {
 
     public ArrayList<ReviewData> reviewDataArrayList = new ArrayList<ReviewData>();
     public ArrayList<TrailerData> trailerDataArrayList = new ArrayList<TrailerData>();
+    public ArrayList<MovieData> FavoritesArrayList;
 
     TrailerAdapter mTrailerAdapter;
     ReviewAdapter mReviewAdapter;
-
     MovieData currentMovie;
-    ArrayList<MovieData> mFavoritesArrayList = null;
+
+    private static final String[] MOVIE_COLUMNS = {
+        MovieEntry.COLUMN_MOVIE_ID,
+        MovieEntry.COLUMN_ORIGINAL_TITLE,
+        MovieEntry.COLUMN_OVERVIEW,
+        MovieEntry.COLUMN_RELEASE_DATE,
+        MovieEntry.COLUMN_POSTER_PATH,
+        MovieEntry.COLUMN_POPULARITY,
+        MovieEntry.COLUMN_VOTE_AVERAGE
+    };
+
+    private static final int COLUMN_MOVIE_ID = 0;
+    private static final int COLUMN_ORIGINAL_TITLE = 1;
+    private static final int COLUMN_OVERVIEW = 2;
+    private static final int COLUMN_RELEASE_DATE = 3;
+    private static final int COLUMN_POSTER_PATH = 4;
+    private static final int COLUMN_POPULARITY = 5;
+    private static final int COLUMN_VOTE_AVERAGE = 6;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        if (savedInstanceState == null || !savedInstanceState.containsKey("reviews") || !savedInstanceState.containsKey("movies") || !savedInstanceState.containsKey("favorites")) {
+        if (savedInstanceState == null || !savedInstanceState.containsKey("reviews") || !savedInstanceState.containsKey("movies")) {
             reviewDataArrayList = new ArrayList<ReviewData>();
             trailerDataArrayList = new ArrayList<TrailerData>();
-            mFavoritesArrayList = new ArrayList<MovieData>();
         } else {
             reviewDataArrayList = savedInstanceState.getParcelableArrayList("reviews");
             trailerDataArrayList = savedInstanceState.getParcelableArrayList("trailers");
-            mFavoritesArrayList = savedInstanceState.getParcelableArrayList("favorites");
         }
     }
 
@@ -73,7 +91,6 @@ public class MovieDetailFragment extends Fragment  {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("reviews", reviewDataArrayList);
         outState.putParcelableArrayList("trailers", trailerDataArrayList);
-        outState.putParcelableArrayList("favorites", mFavoritesArrayList);
     }
 
     @Override
@@ -89,9 +106,24 @@ public class MovieDetailFragment extends Fragment  {
         favorites.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFavoritesArrayList.add(currentMovie);
-                Intent intent = new Intent(getContext(), MovieImageFragment.class);
-                intent.putExtra("favorites", mFavoritesArrayList);
+                Vector<ContentValues> cVVector = new Vector<ContentValues>(MOVIE_COLUMNS.length);
+
+                ContentValues favoriteValues = new ContentValues();
+                favoriteValues.put(MovieEntry.COLUMN_MOVIE_ID, currentMovie.getId());
+                favoriteValues.put(MovieEntry.COLUMN_ORIGINAL_TITLE, currentMovie.getTitle());
+                favoriteValues.put(MovieEntry.COLUMN_POSTER_PATH, currentMovie.getImagePath());
+                favoriteValues.put(MovieEntry.COLUMN_RELEASE_DATE, currentMovie.getDate());
+                favoriteValues.put(MovieEntry.COLUMN_OVERVIEW, currentMovie.getOverview());
+                favoriteValues.put(MovieEntry.COLUMN_POPULARITY, currentMovie.getPop());
+                favoriteValues.put(MovieEntry.COLUMN_VOTE_AVERAGE, currentMovie.getRating());
+
+                cVVector.add(favoriteValues);
+
+                if (cVVector.size() > 0) {
+                    ContentValues[] cvArray = new ContentValues[cVVector.size()];
+                    cVVector.toArray(cvArray);
+                    getContext().getContentResolver().bulkInsert(MovieEntry.CONTENT_URI, cvArray);
+                }
             }
         });
 

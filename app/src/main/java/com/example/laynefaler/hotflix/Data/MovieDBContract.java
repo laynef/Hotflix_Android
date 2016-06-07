@@ -30,19 +30,16 @@ public class MovieDBContract extends SQLiteOpenHelper {
                 MovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_POPULARITY + " REAL NOT NULL, " +
-                MovieEntry.COLUMN_VOTE_AVERAGE + " FLOAT NOT NULL, " +
+                MovieEntry.COLUMN_VOTE_AVERAGE + " FLOAT NOT NULL " +
                 " );";
 
         final String SQL_CREATE_TRAILER_TABLE = "CREATE TABLE " + TrailerEntry.TABLE_NAME + " (" +
                 TrailerEntry._ID + " INTEGER PRIMARY KEY," +
                 TrailerEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
                 TrailerEntry.COLUMN_TRAILER_ID + " TEXT NOT NULL, " +
-                TrailerEntry.COLUMN_KEY + " TEXT NOT NULL, " +
                 TrailerEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 TrailerEntry.COLUMN_SITE + " TEXT NOT NULL, " +
-                TrailerEntry.COLUMN_SIZE + " TEXT NOT NULL, " +
-                TrailerEntry.COLUMN_TYPE + " TEXT NOT NULL, " +
-                TrailerEntry.COLUMN_DATE + " INTEGER NOT NULL, " +
+                TrailerEntry.COLUMN_THUMBNAIL + " TEXT NOT NULL, " +
 
                 // Set up the movie_id column as a foreign key to movie table.
                 " FOREIGN KEY (" + TrailerEntry.COLUMN_MOVIE_ID + ") REFERENCES " +
@@ -58,8 +55,6 @@ public class MovieDBContract extends SQLiteOpenHelper {
                 ReviewEntry.COLUMN_REVIEW_ID + " TEXT NOT NULL, " +
                 ReviewEntry.COLUMN_AUTHOR + " TEXT NOT NULL, " +
                 ReviewEntry.COLUMN_CONTENT + " TEXT NOT NULL, " +
-                ReviewEntry.COLUMN_URL + " TEXT NOT NULL, " +
-                ReviewEntry.COLUMN_DATE + " INTEGER NOT NULL, " +
 
                 // Set up the movie_id column as a foreign key to movie table.
                 " FOREIGN KEY (" + ReviewEntry.COLUMN_MOVIE_ID + ") REFERENCES " +
