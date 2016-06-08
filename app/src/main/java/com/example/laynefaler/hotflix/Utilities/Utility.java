@@ -16,10 +16,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Created by laynefaler on 6/5/16.
+ * Created by Praneeth on 4/21/2016.
  */
-public class HelperMethods {
-
+public class Utility {
 
     private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
     private static final String IMAGE_SIZE = "w342";

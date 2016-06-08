@@ -23,45 +23,60 @@ public class MovieDBContract extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " + MovieEntry.TABLE_NAME + " (" +
-                MovieEntry._ID + " INTEGER PRIMARY KEY," +
+        MovieEntry._ID + " INTEGER PRIMARY KEY," +
                 MovieEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                MovieEntry.COLUMN_IS_ADULT + " TEXT NOT NULL, " +
+                MovieEntry.COLUMN_BACK_DROP_PATH + " TEXT NOT NULL, " +
+                MovieEntry.COLUMN_ORIGINAL_LANGUAGE + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_ORIGINAL_TITLE + " TEXT NOT NULL," +
                 MovieEntry.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_POPULARITY + " REAL NOT NULL, " +
-                MovieEntry.COLUMN_VOTE_AVERAGE + " FLOAT NOT NULL " +
+                MovieEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                MovieEntry.COLUMN_IS_VIDEO + " TEXT NOT NULL, " +
+                MovieEntry.COLUMN_VOTE_AVERAGE + " FLOAT NOT NULL, " +
+                MovieEntry.COLUMN_VOTE_COUNT + " INTEGER NOT NULL, " +
+                MovieEntry.COLUMN_DATE + " INTEGER NOT NULL, " +
+                MovieEntry.COLUMN_RUNTIME + " REAL, " +
+                MovieEntry.COLUMN_STATUS + " TEXT " +
                 " );";
 
-        final String SQL_CREATE_TRAILER_TABLE = "CREATE TABLE " + TrailerEntry.TABLE_NAME + " (" +
-                TrailerEntry._ID + " INTEGER PRIMARY KEY," +
-                TrailerEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
-                TrailerEntry.COLUMN_TRAILER_ID + " TEXT NOT NULL, " +
-                TrailerEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                TrailerEntry.COLUMN_SITE + " TEXT NOT NULL, " +
-                TrailerEntry.COLUMN_THUMBNAIL + " TEXT NOT NULL, " +
+        final String SQL_CREATE_TRAILER_TABLE = "CREATE TABLE " + MovieContract.TrailerEntry.TABLE_NAME + " (" +
+                MovieContract.TrailerEntry._ID + " INTEGER PRIMARY KEY," +
+                MovieContract.TrailerEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_TRAILER_ID + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_ISO_369_1 + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_KEY + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_SITE + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_SIZE + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_TYPE + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_DATE + " INTEGER NOT NULL, " +
 
                 // Set up the movie_id column as a foreign key to movie table.
-                " FOREIGN KEY (" + TrailerEntry.COLUMN_MOVIE_ID + ") REFERENCES " +
+                " FOREIGN KEY (" + MovieContract.TrailerEntry.COLUMN_MOVIE_ID + ") REFERENCES " +
                 MovieEntry.TABLE_NAME + " (" + MovieEntry.COLUMN_MOVIE_ID + ") " +
 
-                " UNIQUE (" + TrailerEntry.COLUMN_MOVIE_ID + ", " +
-                TrailerEntry.COLUMN_TRAILER_ID + ") ON CONFLICT REPLACE);";
+                " UNIQUE (" + MovieContract.TrailerEntry.COLUMN_MOVIE_ID + ", " +
+                MovieContract.TrailerEntry.COLUMN_TRAILER_ID + ") ON CONFLICT REPLACE);";
 
 
-        final String SQL_CREATE_REVIEW_TABLE = "CREATE TABLE " + ReviewEntry.TABLE_NAME + " (" +
-                ReviewEntry._ID + " INTEGER PRIMARY KEY," +
-                ReviewEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
-                ReviewEntry.COLUMN_REVIEW_ID + " TEXT NOT NULL, " +
-                ReviewEntry.COLUMN_AUTHOR + " TEXT NOT NULL, " +
-                ReviewEntry.COLUMN_CONTENT + " TEXT NOT NULL, " +
+        final String SQL_CREATE_REVIEW_TABLE = "CREATE TABLE " + MovieContract.ReviewEntry.TABLE_NAME + " (" +
+                MovieContract.ReviewEntry._ID + " INTEGER PRIMARY KEY," +
+                MovieContract.ReviewEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                MovieContract.ReviewEntry.COLUMN_REVIEW_ID + " TEXT NOT NULL, " +
+                MovieContract.ReviewEntry.COLUMN_AUTHOR + " TEXT NOT NULL, " +
+                MovieContract.ReviewEntry.COLUMN_CONTENT + " TEXT NOT NULL, " +
+                MovieContract.ReviewEntry.COLUMN_URL + " TEXT NOT NULL, " +
+                MovieContract.ReviewEntry.COLUMN_DATE + " INTEGER NOT NULL, " +
 
                 // Set up the movie_id column as a foreign key to movie table.
-                " FOREIGN KEY (" + ReviewEntry.COLUMN_MOVIE_ID + ") REFERENCES " +
+                " FOREIGN KEY (" + MovieContract.ReviewEntry.COLUMN_MOVIE_ID + ") REFERENCES " +
                 MovieEntry.TABLE_NAME + " (" + MovieEntry.COLUMN_MOVIE_ID + ") " +
 
-                " UNIQUE (" + ReviewEntry.COLUMN_MOVIE_ID + ", " +
-                ReviewEntry.COLUMN_REVIEW_ID + ") ON CONFLICT REPLACE);";
+                " UNIQUE (" + MovieContract.ReviewEntry.COLUMN_MOVIE_ID + ", " +
+                MovieContract.ReviewEntry.COLUMN_REVIEW_ID + ") ON CONFLICT REPLACE);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_MOVIE_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_TRAILER_TABLE);
