@@ -1,7 +1,10 @@
 package com.example.laynefaler.hotflix.Fragments;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,12 +35,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class  MovieImageFragment extends Fragment {
+public class  MovieImageFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private String LOG_TAG = MovieImageFragment.class.getSimpleName();
 
+    private static final int FAVORITE_LOADER = 0;
+
     ArrayList<MovieData> MovieDataArrayList = new ArrayList<MovieData>();
     ImageAdapter mMovieDataAdapter;
+    ImageAdapter mFavoritesAdapter;
 
     public MovieImageFragment() {}
 
@@ -70,6 +76,25 @@ public class  MovieImageFragment extends Fragment {
     public void onStart() {
         super.onStart();
         updateImages();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String sortOption = prefs.getString();
+
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 
     @Override
@@ -174,6 +199,50 @@ public class  MovieImageFragment extends Fragment {
                         return null;
                     }
                     singleMovieJsonStr = buffer.toString();
+
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "IOException", e);
+                    return null;
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (final IOException e) {
+                            Log.e(LOG_TAG, "Final IOException", e);
+                        }
+                    }
+                }
+            } else {
+                try {
+                    final String MOVIE_URL_BASE = "http://api.themoviedb.org/3/movie/";
+                    final String API_PARAM = "api_key";
+
+                            Uri builtUri = Uri.parse(MOVIE_URL_BASE).buildUpon()
+                                    .appendQueryParameter(API_PARAM, BuildConfig.THE_MOVIE_DB_API_KEY)
+                                    .build();
+
+                            URL url = new URL(builtUri.toString());
+                            urlConnection = (HttpURLConnection) url.openConnection();
+                            urlConnection.setRequestMethod("GET");
+                            urlConnection.connect();
+
+                            InputStream inputStream = urlConnection.getInputStream();
+                            StringBuffer buffer = new StringBuffer();
+                            if (inputStream == null) {
+                                return null;
+                            }
+                            reader = new BufferedReader(new InputStreamReader(inputStream));
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                buffer.append(line + "\n");
+                            }
+                            if (buffer.length() == 0) {
+                                return null;
+                            }
+                            singleMovieJsonStr = buffer.toString();
 
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "IOException", e);
