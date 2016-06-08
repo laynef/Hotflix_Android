@@ -1,7 +1,5 @@
 package com.example.laynefaler.hotflix.Fragments;
 
-import android.app.LoaderManager;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -89,7 +87,7 @@ public class  MovieImageFragment extends Fragment implements android.support.v4.
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_movie_image, container, false);
-        mMovieAdapter = new ImageAdapter(getActivity(), null);
+        mMovieAdapter = new ImageAdapter(getActivity(), null, 0);
 
         gridView = (GridView) rootView.findViewById(R.id.main_gridview);
         gridView.setAdapter(mMovieAdapter);

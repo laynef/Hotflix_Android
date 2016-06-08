@@ -1,50 +1,51 @@
 package com.example.laynefaler.hotflix.Adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.example.laynefaler.hotflix.DataTypes.TrailerData;
+import com.example.laynefaler.hotflix.Fragments.MovieDetailFragment;
 import com.example.laynefaler.hotflix_android.R;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created by laynefaler on 5/28/16.
  */
-public class TrailerAdapter extends ArrayAdapter<TrailerData> {
+public class TrailerAdapter extends CursorAdapter {
 
-    public ArrayList<TrailerData> trailerDataArrayList;
-
-    public void updateTrailerData(ArrayList<TrailerData> newData) {
-        this.trailerDataArrayList = newData;
-        notifyDataSetChanged();
-    }
-
-    public TrailerAdapter(Context context, ArrayList<TrailerData> trailer) {
-        super(context, 0, trailer);
+    public TrailerAdapter(Context context, Cursor c, int flags) {
+        super(context, c, flags);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        TrailerData trailerData = getItem(position);
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(R.layout.movie_list_trailer, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        view.setTag(viewHolder);
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_list_trailer, parent, false);
-        }
-
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.playTrailerButton);
-        Picasso.with(getContext()).load(trailerData.getTrailerThumbnail()).into(imageView);
-
-        TextView contentTextView = (TextView) convertView.findViewById(R.id.trailer_title_textview);
-        contentTextView.setText(trailerData.getTrailerTitle());
-
-        return convertView;
+        return view;
     }
+
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
+        String trailer = cursor.getString(MovieDetailFragment.COL_NAME);
+        viewHolder.trailerTextView.setText(trailer);
+
+    }
+
+    public static class ViewHolder {
+        public static TextView trailerTextView;
+
+        public ViewHolder(View view) {
+            trailerTextView = (TextView) view.findViewById(R.id.trailer_title_textview);
+        }
+    }
+
+
 
 }

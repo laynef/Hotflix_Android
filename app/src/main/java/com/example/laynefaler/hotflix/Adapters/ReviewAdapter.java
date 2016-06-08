@@ -1,48 +1,55 @@
 package com.example.laynefaler.hotflix.Adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.example.laynefaler.hotflix.DataTypes.ReviewData;
+import com.example.laynefaler.hotflix.Fragments.MovieDetailFragment;
 import com.example.laynefaler.hotflix_android.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by laynefaler on 5/26/16.
  */
-public class ReviewAdapter extends ArrayAdapter<ReviewData> {
+public class ReviewAdapter extends CursorAdapter {
 
-
-    public ArrayList<ReviewData> reviewDataArrayList;
-
-    public void updateReviewData(ArrayList<ReviewData> newData) {
-        this.reviewDataArrayList = newData;
-        notifyDataSetChanged();
-    }
-
-    public ReviewAdapter(Context context, ArrayList<ReviewData> reviews) {
-        super(context, 0, reviews);
+    public ReviewAdapter(Context context, Cursor c, int flags) {
+        super(context, c, flags);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ReviewData reviewData = getItem(position);
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(R.layout.movie_list_review, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        view.setTag(viewHolder);
 
-        if (convertView == null) {
-             convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_list_review, parent, false);
-        }
-
-        TextView authorTextView = (TextView) convertView.findViewById(R.id.review_author);
-        authorTextView.setText(reviewData.getAuthor());
-
-        TextView contentTextView = (TextView) convertView.findViewById(R.id.review_content);
-        contentTextView.setText(reviewData.getContent());
-
-        return convertView;
+        return view;
     }
+
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
+
+        String author = cursor.getString(MovieDetailFragment.COL_AUTHOR);
+        viewHolder.authorTextView.setText(author);
+
+        String content = cursor.getString(MovieDetailFragment.COL_CONTENT);
+        viewHolder.contentTextView.setText(content);
+
+    }
+
+    public static class ViewHolder {
+        public static TextView authorTextView;
+        public static TextView contentTextView;
+
+        public ViewHolder(View view) {
+            authorTextView = (TextView) view.findViewById(R.id.review_author);
+            contentTextView = (TextView) view.findViewById(R.id.review_content);
+        }
+    }
+
 }

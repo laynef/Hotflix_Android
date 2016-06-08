@@ -1,42 +1,50 @@
 package com.example.laynefaler.hotflix.Adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
 
-import com.example.laynefaler.hotflix.DataTypes.MovieData;
+import com.example.laynefaler.hotflix.Fragments.MovieImageFragment;
+import com.example.laynefaler.hotflix.Utilities.Utility;
 import com.example.laynefaler.hotflix_android.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+public class ImageAdapter extends CursorAdapter {
 
-public class ImageAdapter extends ArrayAdapter<MovieData> {
-
-    ArrayList<MovieData> movieDataList;
-
-    public ImageAdapter(Context context, ArrayList<MovieData> images) {
-        super(context, 0, images);
+    public ImageAdapter(Context context, Cursor c, int flags) {
+        super(context, c, flags);
     }
 
-    public void updateData(ArrayList<MovieData> newData) {
-        this.movieDataList = newData;
-        notifyDataSetChanged();
+    public static class ViewHolder {
+        public final ImageView imageView;
+
+        public ViewHolder(View view) {
+            imageView = (ImageView) view.findViewById(R.id.movie_grid_imageview);
+        }
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        MovieData movieData1 = getItem(position);
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(R.layout.fragment_movie_image, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        view.setTag(viewHolder);
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_grid_image, parent, false);
-        }
+        return view;
+    }
 
-        ImageView movieImage = (ImageView) convertView.findViewById(R.id.movie_grid_imageview);
-        Picasso.with(getContext()).load(movieData1.getImagePath()).into(movieImage);
-        return convertView;
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
+        String posterPath = cursor.getString(MovieImageFragment.COL_POSTER_PATH);
+        String moviePoster = Utility.getImageURL(posterPath);
+
+        Picasso.with(context).load(moviePoster).into(viewHolder.imageView);
+
     }
 }
 

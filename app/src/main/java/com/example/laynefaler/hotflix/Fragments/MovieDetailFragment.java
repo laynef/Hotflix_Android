@@ -1,6 +1,5 @@
 package com.example.laynefaler.hotflix.Fragments;
 
-import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -28,7 +27,6 @@ import com.example.laynefaler.hotflix.Sync.MovieSyncAdapter;
 import com.example.laynefaler.hotflix.Utilities.Utility;
 import com.example.laynefaler.hotflix_android.R;
 import com.squareup.picasso.Picasso;
-import com.example.laynefaler.hotflix.Utilities.Utility;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -121,8 +119,8 @@ public class MovieDetailFragment extends Fragment implements android.support.v4.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.registerOnSharedPreferenceChangeListener(this);
 
-        mTrailerListAdapter = new TrailerAdapter(getActivity(), null);
-        mReviewListAdapter = new ReviewAdapter(getActivity(), null);
+        mTrailerListAdapter = new TrailerAdapter(getActivity(), null, 0);
+        mReviewListAdapter = new ReviewAdapter(getActivity(), null, 0);
 
         mMovieImageView = (ImageView) rootView.findViewById(R.id.detailView);
         mMovieNameView = (TextView) rootView.findViewById(R.id.title_textview);
