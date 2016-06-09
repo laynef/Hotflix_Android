@@ -24,18 +24,18 @@ public class MovieDBContract extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " + MovieEntry.TABLE_NAME + " (" +
         MovieEntry._ID + " INTEGER PRIMARY KEY," +
-                MovieEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                MovieEntry.COLUMN_MOVIE_ID + " INTEGER, " +
                 MovieEntry.COLUMN_IS_ADULT + " TEXT, " +
                 MovieEntry.COLUMN_BACK_DROP_PATH + " TEXT, " +
                 MovieEntry.COLUMN_ORIGINAL_LANGUAGE + " TEXT, " +
-                MovieEntry.COLUMN_ORIGINAL_TITLE + " TEXT NOT NULL," +
-                MovieEntry.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
-                MovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
-                MovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
-                MovieEntry.COLUMN_POPULARITY + " REAL NOT NULL, " +
+                MovieEntry.COLUMN_ORIGINAL_TITLE + " TEXT," +
+                MovieEntry.COLUMN_OVERVIEW + " TEXT, " +
+                MovieEntry.COLUMN_RELEASE_DATE + " TEXT, " +
+                MovieEntry.COLUMN_POSTER_PATH + " TEXT, " +
+                MovieEntry.COLUMN_POPULARITY + " REAL, " +
                 MovieEntry.COLUMN_TITLE + " TEXT, " +
                 MovieEntry.COLUMN_IS_VIDEO + " TEXT, " +
-                MovieEntry.COLUMN_VOTE_AVERAGE + " FLOAT NOT NULL, " +
+                MovieEntry.COLUMN_VOTE_AVERAGE + " FLOAT, " +
                 MovieEntry.COLUMN_VOTE_COUNT + " INTEGER, " +
                 MovieEntry.COLUMN_DATE + " INTEGER, " +
                 MovieEntry.COLUMN_RUNTIME + " REAL, " +
@@ -47,9 +47,9 @@ public class MovieDBContract extends SQLiteOpenHelper {
                 MovieContract.TrailerEntry.COLUMN_MOVIE_ID + " INTEGER, " +
                 MovieContract.TrailerEntry.COLUMN_TRAILER_ID + " TEXT, " +
                 MovieContract.TrailerEntry.COLUMN_ISO_369_1 + " TEXT, " +
-                MovieContract.TrailerEntry.COLUMN_KEY + " TEXT NOT NULL, " +
-                MovieContract.TrailerEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                MovieContract.TrailerEntry.COLUMN_SITE + " TEXT NOT NULL, " +
+                MovieContract.TrailerEntry.COLUMN_KEY + " TEXT, " +
+                MovieContract.TrailerEntry.COLUMN_NAME + " TEXT, " +
+                MovieContract.TrailerEntry.COLUMN_SITE + " TEXT, " +
                 MovieContract.TrailerEntry.COLUMN_SIZE + " TEXT, " +
                 MovieContract.TrailerEntry.COLUMN_TYPE + " TEXT, " +
                 MovieContract.TrailerEntry.COLUMN_DATE + " INTEGER, " +
@@ -66,8 +66,8 @@ public class MovieDBContract extends SQLiteOpenHelper {
                 MovieContract.ReviewEntry._ID + " INTEGER PRIMARY KEY," +
                 MovieContract.ReviewEntry.COLUMN_MOVIE_ID + " INTEGER, " +
                 MovieContract.ReviewEntry.COLUMN_REVIEW_ID + " TEXT, " +
-                MovieContract.ReviewEntry.COLUMN_AUTHOR + " TEXT NOT NULL, " +
-                MovieContract.ReviewEntry.COLUMN_CONTENT + " TEXT NOT NULL, " +
+                MovieContract.ReviewEntry.COLUMN_AUTHOR + " TEXT, " +
+                MovieContract.ReviewEntry.COLUMN_CONTENT + " TEXT, " +
                 MovieContract.ReviewEntry.COLUMN_URL + " TEXT, " +
                 MovieContract.ReviewEntry.COLUMN_DATE + " INTEGER, " +
 

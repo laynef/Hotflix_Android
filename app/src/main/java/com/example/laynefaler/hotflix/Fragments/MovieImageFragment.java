@@ -136,6 +136,8 @@ public class  MovieImageFragment extends Fragment implements android.support.v4.
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
+        // Searching by "popular" and "top_rated" to meet the rubric
+        // However it is excepting "popularity.desc" and "vote_average.desc"
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sortOption = prefs.getString(getString(R.string.movieKey), getString(R.string.arrayPopularValue));
 
