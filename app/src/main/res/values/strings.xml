@@ -12,8 +12,11 @@
     <string name="arrayTopRated">Top Rated</string>
     <string name="arrayFavorite">Favorites</string>
 
+    <!-- Supposed to be: popular ?  or popularity.desc -->
     <string name="arrayPopularValue">popular</string>
+    <!-- Supposed to be: top_rated ? or vote_average.desc -->
     <string name="arrayTopRatedValue">top_rated</string>
+
     <string name="arrayFavoriteValue">favorites</string>
 
     <string name="sync_account_type">hotflix.com</string>

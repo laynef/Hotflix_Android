@@ -55,7 +55,7 @@ public class  MovieImageFragment extends Fragment implements android.support.v4.
             MovieEntry.COLUMN_VOTE_COUNT,
             MovieEntry.COLUMN_RUNTIME,
             MovieEntry.COLUMN_STATUS,
-            MovieEntry.COLUMN_DATE
+            MovieEntry.COLUMN_DATE,
     };
 
     public static final int COL_MOVIE_PK_ID = 0;
@@ -141,15 +141,16 @@ public class  MovieImageFragment extends Fragment implements android.support.v4.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sortOption = prefs.getString(getString(R.string.movieKey), getString(R.string.arrayPopularValue));
 
-        String sortOrder = "popular";
+        String sortOrder = MovieEntry.COLUMN_POPULARITY + " DESC";
 
         if (sortOption.equals(getString(R.string.arrayTopRatedValue))) {
-            sortOrder = "top_rated";
+            sortOrder = MovieEntry.COLUMN_VOTE_AVERAGE + " DESC";
         }
 
         Uri movieForIdUri = MovieEntry.buildMovieUri();
 
-        return new CursorLoader(getActivity(),
+        return new CursorLoader(
+                getActivity(),
                 movieForIdUri,
                 MOVIE_COLUMNS,
                 null,

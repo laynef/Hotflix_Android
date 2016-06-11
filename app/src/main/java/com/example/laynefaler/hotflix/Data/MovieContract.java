@@ -58,7 +58,6 @@ public class MovieContract {
         public static final String COLUMN_STATUS = "status";
         public static final String COLUMN_DATE = "date";
 
-
         public static Uri buildMovieUri() {
             return CONTENT_URI;
         }
