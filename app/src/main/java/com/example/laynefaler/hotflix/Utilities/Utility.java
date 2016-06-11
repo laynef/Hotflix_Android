@@ -10,7 +10,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.example.laynefaler.hotflix.Fragments.MovieDetailFragment;
-import com.example.laynefaler.hotflix_android.R;
+import com.example.laynefaler.hotflix.R;
 
 import java.util.Iterator;
 import java.util.Set;

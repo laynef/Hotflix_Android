@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.MenuItem;import com.example.laynefaler.hotflix_android.R;
+import android.view.MenuItem;
+
+import com.example.laynefaler.hotflix.R;
+
 
 public class DetailActivity extends ActionBarActivity {
 

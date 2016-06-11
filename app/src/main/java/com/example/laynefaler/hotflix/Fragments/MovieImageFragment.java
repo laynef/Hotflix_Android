@@ -19,7 +19,7 @@ import com.example.laynefaler.hotflix.Adapters.ImageAdapter;
 import com.example.laynefaler.hotflix.Data.MovieContract.MovieEntry;
 import com.example.laynefaler.hotflix.DataTypes.MovieData;
 import com.example.laynefaler.hotflix.Sync.MovieSyncAdapter;
-import com.example.laynefaler.hotflix_android.R;
+import com.example.laynefaler.hotflix.R;
 
 import java.util.ArrayList;
 

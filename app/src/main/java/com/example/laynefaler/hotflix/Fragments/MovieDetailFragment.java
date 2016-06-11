@@ -25,7 +25,7 @@ import com.example.laynefaler.hotflix.Data.MovieContract.ReviewEntry;
 import com.example.laynefaler.hotflix.Data.MovieContract.TrailerEntry;
 import com.example.laynefaler.hotflix.Sync.MovieSyncAdapter;
 import com.example.laynefaler.hotflix.Utilities.Utility;
-import com.example.laynefaler.hotflix_android.R;
+import com.example.laynefaler.hotflix.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.example.laynefaler.hotflix.Fragments.MovieImageFragment;
 import com.example.laynefaler.hotflix.Utilities.Utility;
-import com.example.laynefaler.hotflix_android.R;
+import com.example.laynefaler.hotflix.R;
 import com.squareup.picasso.Picasso;
 
 public class ImageAdapter extends CursorAdapter {

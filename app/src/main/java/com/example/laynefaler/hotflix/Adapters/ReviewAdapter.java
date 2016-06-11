@@ -9,7 +9,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.example.laynefaler.hotflix.Fragments.MovieDetailFragment;
-import com.example.laynefaler.hotflix_android.R;
+import com.example.laynefaler.hotflix.R;
 
 /**
  * Created by laynefaler on 5/26/16.

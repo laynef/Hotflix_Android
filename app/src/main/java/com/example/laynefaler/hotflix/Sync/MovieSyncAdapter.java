@@ -12,7 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.laynefaler.hotflix_android.R;
+import com.example.laynefaler.hotflix.R;
 
 /**
  * Created by laynefaler on 5/31/16.
@@ -22,7 +22,6 @@ public class MovieSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public static final int SYNC_INTERVAL = 60 * 180;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
-    private static final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
 
     public MovieSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);

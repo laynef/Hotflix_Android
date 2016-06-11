@@ -10,14 +10,14 @@ import android.util.Log;
 import com.example.laynefaler.hotflix.Adapters.ReviewAdapter;
 import com.example.laynefaler.hotflix.Adapters.TrailerAdapter;
 import com.example.laynefaler.hotflix.Data.MovieContract;
+import com.example.laynefaler.hotflix.Data.MovieContract.MovieEntry;
+import com.example.laynefaler.hotflix.Data.MovieContract.TrailerEntry;
 import com.example.laynefaler.hotflix.DataTypes.MovieData;
 import com.example.laynefaler.hotflix.DataTypes.ReviewData;
 import com.example.laynefaler.hotflix.DataTypes.TrailerData;
+import com.example.laynefaler.hotflix.R;
 import com.example.laynefaler.hotflix.Utilities.Utility;
-import com.example.laynefaler.hotflix_android.BuildConfig;
-import com.example.laynefaler.hotflix_android.R;
-import com.example.laynefaler.hotflix.Data.MovieContract.MovieEntry;
-import com.example.laynefaler.hotflix.Data.MovieContract.TrailerEntry;
+import com.example.laynefaler.hotflix.BuildConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;

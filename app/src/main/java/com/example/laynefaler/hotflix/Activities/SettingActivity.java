@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;import com.example.laynefaler.hotflix_android.R;
+import android.preference.PreferenceManager;
+import com.example.laynefaler.hotflix.R;
 
 public class SettingActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 

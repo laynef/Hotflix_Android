@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.laynefaler.hotflix_android">
+    package="com.example.laynefaler.hotflix">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -38,7 +38,6 @@
         <provider
             android:authorities="@string/content_authority"
             android:name="com.example.laynefaler.hotflix.Data.MovieProvider"
-            android:exported="false"
             android:syncable="true" />
 
         <!-- SyncAdapter's dummy authentication service -->
