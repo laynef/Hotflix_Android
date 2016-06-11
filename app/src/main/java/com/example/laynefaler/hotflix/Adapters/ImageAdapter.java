@@ -29,7 +29,8 @@ public class ImageAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_movie_image, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.movie_grid_image, parent, false);
+        // or fragment_movie_image which doesn't work either
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
 
