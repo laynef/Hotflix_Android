@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.laynefaler.hotflix.Fragments.MovieDetailFragment;
 import com.example.laynefaler.hotflix.R;
 
 
@@ -15,6 +16,20 @@ public class DetailActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        if (savedInstanceState == null) {
+
+            Bundle arguments = new Bundle();
+            String data[] = getIntent().getStringArrayExtra(Intent.EXTRA_TEXT);
+            arguments.putStringArray(Intent.EXTRA_TEXT, data);
+
+            // incorrect id
+            MovieDetailFragment fragment = new MovieDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.frame_layout_detail, fragment)
+                    .commit();
+        }
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.laynefaler.hotflix.R;
+import com.example.laynefaler.hotflix.Tasks.FetchMovieTask;
 
 /**
  * Created by laynefaler on 5/31/16.
@@ -30,7 +31,9 @@ public class MovieSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         Log.d(LOG_TAG, "onPerformSync Called.");
-        // FetchImageTask perform
+
+        FetchMovieTask fetchMovieTask = new FetchMovieTask();
+        fetchMovieTask.loadData(getContext());
     }
 
     public static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {

@@ -29,16 +29,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.laynefaler.hotflix.Activities.MainActivity" />
         </activity>
+
         <activity android:name="com.example.laynefaler.hotflix.Activities.SettingActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme"
             android:parentActivityName="com.example.laynefaler.hotflix.Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.laynefaler.hotflix.Activities.MainActivity" />
         </activity>
+
         <provider
             android:authorities="@string/content_authority"
-            android:name="com.example.laynefaler.hotflix.Data.MovieProvider"
-            android:syncable="true" />
+            android:name="com.example.laynefaler.hotflix.Data.MovieProvider" />
 
         <!-- SyncAdapter's dummy authentication service -->
         <service

@@ -16,7 +16,7 @@
     <string name="arrayTopRatedValue">top_rated</string>
     <string name="arrayFavoriteValue">favorites</string>
     <!-- Supposed to be: hoyflix.com ? -->
-    <string name="sync_account_type">hotflix.laynefaler.example.com</string>
+    <string name="sync_account_type">hotflix.com</string>
     <string name="content_authority">com.example.laynefaler.hotflix</string>
 
 </resources>

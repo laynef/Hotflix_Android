@@ -47,8 +47,7 @@ public class FetchMovieTask {
     private Context mContext;
     private Time mDayTime = new Time();
     private int mJulianStartDay = 0;
-    private String mSortByParamValue = "popular"; // part of the problem...
-    // should this be popularity.desc or popular
+    private String mSortByParamValue = "popular";
 
     TrailerAdapter mTrailerAdapter;
     ReviewAdapter mReviewAdapter;

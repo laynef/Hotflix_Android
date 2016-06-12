@@ -18,7 +18,6 @@ import com.example.laynefaler.hotflix.Data.MovieContract.TrailerEntry;
  */
 public class MovieProvider extends ContentProvider {
 
-
     // The URI Matcher used by this content provider.
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private MovieDBContract mOpenHelper;
@@ -203,6 +202,7 @@ public class MovieProvider extends ContentProvider {
 
         switch (match) {
             case MOVIE: {
+                normalizeDate(values);
                 long _id = db.insert(MovieEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = MovieEntry.buildMovieUri(_id);
@@ -211,6 +211,7 @@ public class MovieProvider extends ContentProvider {
                 break;
             }
             case TRAILER: {
+                normalizeDate(values);
                 long _id = db.insert(TrailerEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = TrailerEntry.buildMovieTrailerUri(_id);
@@ -219,6 +220,7 @@ public class MovieProvider extends ContentProvider {
                 break;
             }
             case REVIEW: {
+                normalizeDate(values);
                 long _id = db.insert(ReviewEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
                     returnUri = ReviewEntry.buildMovieReviewsUri(_id);
@@ -275,6 +277,7 @@ public class MovieProvider extends ContentProvider {
                 int returnCount = 0;
                 try {
                     for (ContentValues value : values) {
+                        normalizeDate(value);
                         long _id = db.insert(MovieEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             returnCount++;
@@ -291,6 +294,7 @@ public class MovieProvider extends ContentProvider {
                 returnCount = 0;
                 try {
                     for (ContentValues value : values) {
+                        normalizeDate(value);
                         long _id = db.insert(TrailerEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             returnCount++;
@@ -308,6 +312,7 @@ public class MovieProvider extends ContentProvider {
                 int valuesLength = values.length;
                 try {
                     for (ContentValues value : values) {
+                        normalizeDate(value);
                         long _id = db.insert(ReviewEntry.TABLE_NAME, null, value);
                         if (_id != -1) {
                             returnCount++;
@@ -365,6 +370,15 @@ public class MovieProvider extends ContentProvider {
         // Student: return the actual rows deleted
         return rowsDeleted;
     }
+    private void normalizeDate(ContentValues values) {
+        // normalize the date value
+
+        if (values.containsKey(MovieEntry.COLUMN_DATE)) {
+            long dateValue = values.getAsLong(MovieEntry.COLUMN_DATE);
+            values.put(MovieEntry.COLUMN_DATE, MovieContract.normalizeDate(dateValue));
+        }
+    }
+
 
     // You do not need to call this method. This is a method specifically to assist the testing
     // framework in running smoothly. You can read more at:
