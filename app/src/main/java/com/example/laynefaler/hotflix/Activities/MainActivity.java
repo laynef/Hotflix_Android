@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements MovieImageFragmen
         setContentView(R.layout.activity_main);
         mSortOrder = Utility.getSortOrder(this);
 
-        if (findViewById(R.id.detail_fragment) != null) {
+        if (findViewById(R.id.frame_layout_detail) != null) {
 
             mTwoPane = true;
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MovieImageFragmen
             if (savedInstanceState == null) {
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.detail_fragment, fragment)
+                        .replace(R.id.frame_layout_detail, fragment)
                         .commit();
             } else {
                 mFragment = (MovieImageFragment) getSupportFragmentManager()
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements MovieImageFragmen
             fragment.setArguments(args);
 
             getSupportFragmentManager().beginTransaction().
-                    replace(R.id.detail_fragment, fragment, MOVIE_DETAIL_FRAGMENT_TAG)
+                    replace(R.id.frame_layout_detail, fragment, MOVIE_DETAIL_FRAGMENT_TAG)
                     .commit();
 
         } else {

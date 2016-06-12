@@ -8,12 +8,6 @@
     android:background="@color/backgroundColor"
     tools:context="com.example.laynefaler.hotflix.Activities.DetailActivity">
 
-    <fragment
-        android:id="@+id/detail_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.example.laynefaler.hotflix.Fragments.MovieDetailFragment"/>
-
     <FrameLayout
         android:id="@+id/frame_layout_detail"
         android:layout_width="match_parent"
