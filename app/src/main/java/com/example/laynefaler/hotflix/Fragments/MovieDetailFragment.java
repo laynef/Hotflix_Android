@@ -350,6 +350,7 @@ public class MovieDetailFragment extends Fragment implements android.support.v4.
                 }
             }
         }
+
         return result;
     }
 

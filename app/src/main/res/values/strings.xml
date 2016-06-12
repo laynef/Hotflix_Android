@@ -18,5 +18,6 @@
     <!-- Supposed to be: hoyflix.com ? -->
     <string name="sync_account_type">hotflix.com</string>
     <string name="content_authority">com.example.laynefaler.hotflix</string>
+    <string name="empty_favorites_view_text">No movies have been labeled as a favorite</string>
 
 </resources>

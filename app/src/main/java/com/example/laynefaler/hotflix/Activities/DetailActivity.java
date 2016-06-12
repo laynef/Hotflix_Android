@@ -2,6 +2,7 @@ package com.example.laynefaler.hotflix.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,11 +50,11 @@ public class DetailActivity extends ActionBarActivity {
         return true;
     }
 
+    @Nullable
     @Override
-    public void onBackPressed() {
-        finish();
-        Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(backIntent, 0);
+    public Intent getParentActivityIntent() {
+        return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
+
 
 }

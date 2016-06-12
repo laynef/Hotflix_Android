@@ -27,6 +27,7 @@ import java.net.URL;
 import java.util.Vector;
 
 
+
 /**
  * Created by laynefaler on 6/7/16.
  */
@@ -59,6 +60,13 @@ public class FetchMovieTask {
 
             FetchMovieTrailersDataTask trailersDataTask = new FetchMovieTrailersDataTask();
             trailersDataTask.execute();
+        }
+
+        if (mSortByParamValue.equals(R.string.arrayFavoriteValue)) {
+            mMovieIds = Utility.loadFavoriteMovieIds(mContext);
+            if (mMovieIds == null || mMovieIds.length == 0) {
+                return;
+            }
         }
     }
 

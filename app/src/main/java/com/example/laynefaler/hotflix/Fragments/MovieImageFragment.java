@@ -14,11 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.laynefaler.hotflix.Adapters.ImageAdapter;
 import com.example.laynefaler.hotflix.Data.MovieContract.MovieEntry;
 import com.example.laynefaler.hotflix.R;
 import com.example.laynefaler.hotflix.Sync.MovieSyncAdapter;
+import com.example.laynefaler.hotflix.Tasks.FetchMovieTask;
+import com.example.laynefaler.hotflix.Utilities.Utility;
 
 public class  MovieImageFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -79,12 +82,22 @@ public class  MovieImageFragment extends Fragment implements android.support.v4.
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        FetchMovieTask fmt = new FetchMovieTask();
+        fmt.loadData(getActivity());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_movie_image, container, false);
+
         mMovieAdapter = new ImageAdapter(getActivity(), null, 0);
 
         gridView = (GridView) rootView.findViewById(R.id.main_gridview);
+        TextView emptyTextView = (TextView) rootView.findViewById(R.id.empty_favorites_view);
+        emptyTextView.setText(getString(R.string.empty_favorites_view_text));
         gridView.setAdapter(mMovieAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -138,13 +151,14 @@ public class  MovieImageFragment extends Fragment implements android.support.v4.
         // Searching by "popular" and "top_rated" to meet the rubric
         // However it is excepting "popularity.desc" and "vote_average.desc"
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sortOption = prefs.getString(getString(R.string.movieKey), getString(R.string.arrayPopularValue));
+        String sortOption = prefs.getString(getString(R.string.movieKey), null);
 
         String sortOrder = MovieEntry.COLUMN_POPULARITY + " DESC";
 
-        if (sortOption.equals(getString(R.string.arrayTopRatedValue))) {
+        if (sortOption != null && sortOption.equals(getString(R.string.arrayTopRatedValue))) {
             sortOrder = MovieEntry.COLUMN_VOTE_AVERAGE + " DESC";
         }
+
 
         Uri movieForIdUri = MovieEntry.buildMovieUri();
 
@@ -160,11 +174,21 @@ public class  MovieImageFragment extends Fragment implements android.support.v4.
     @Override
     public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
         mMovieAdapter.swapCursor(data);
+        emptyView();
     }
 
     @Override
     public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {
         mMovieAdapter.swapCursor(null);
+    }
+
+    private void emptyView() {
+        if (Utility.getSortOrder(getActivity()).equals(getActivity().getString(R.string.arrayFavoriteValue))) {
+            String [] favorites = Utility.loadFavoriteMovieIds(getActivity());
+            if (mMovieAdapter.getCount() == 0 || favorites == null || favorites.length <= 0) {
+                getView().findViewById(R.id.empty_favorites_view);
+            }
+        }
     }
 
 } // end of class
