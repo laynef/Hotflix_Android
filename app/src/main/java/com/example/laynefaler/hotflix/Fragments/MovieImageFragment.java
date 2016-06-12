@@ -17,11 +17,8 @@ import android.widget.GridView;
 
 import com.example.laynefaler.hotflix.Adapters.ImageAdapter;
 import com.example.laynefaler.hotflix.Data.MovieContract.MovieEntry;
-import com.example.laynefaler.hotflix.DataTypes.MovieData;
-import com.example.laynefaler.hotflix.Sync.MovieSyncAdapter;
 import com.example.laynefaler.hotflix.R;
-
-import java.util.ArrayList;
+import com.example.laynefaler.hotflix.Sync.MovieSyncAdapter;
 
 public class  MovieImageFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -31,8 +28,6 @@ public class  MovieImageFragment extends Fragment implements android.support.v4.
     private static final int FORECAST_LOADER = 0;
     public static GridView gridView;
     private boolean mTwoPane;
-
-    ArrayList<MovieData> mMovieArrayList;
 
     public MovieImageFragment() {
 
@@ -99,8 +94,12 @@ public class  MovieImageFragment extends Fragment implements android.support.v4.
                 String posterPath = cursor.getString(COL_POSTER_PATH);
                 if (cursor != null) {
 
-                    String data[] = {posterPath, cursor.getString(COL_RELEASE_DATE).toString(), Double.toString(cursor.getDouble(COL_VOTE_AVERAGE)), cursor.getString(COL_OVERVIEW),
-                            cursor.getString(COL_ORIGINAL_TITLE), Integer.toString(cursor.getInt(COL_MOVIE_ID))};
+                    String data[] = {posterPath,
+                            cursor.getString(COL_RELEASE_DATE).toString(),
+                            Double.toString(cursor.getDouble(COL_VOTE_AVERAGE)),
+                            cursor.getString(COL_OVERVIEW),
+                            cursor.getString(COL_ORIGINAL_TITLE),
+                            Integer.toString(cursor.getInt(COL_MOVIE_ID))};
                     ((Callback) getActivity()).onItemSelected(data);
                 }
             }

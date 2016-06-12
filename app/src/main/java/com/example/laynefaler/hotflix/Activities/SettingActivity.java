@@ -6,6 +6,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+
 import com.example.laynefaler.hotflix.R;
 
 public class SettingActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
@@ -49,4 +51,11 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
         Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(backIntent, 0);
     }
+
+    @Nullable
+    @Override
+    public Intent getParentActivityIntent() {
+        return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    }
+
 }

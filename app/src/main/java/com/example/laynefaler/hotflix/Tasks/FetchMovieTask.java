@@ -7,17 +7,12 @@ import android.os.AsyncTask;
 import android.text.format.Time;
 import android.util.Log;
 
-import com.example.laynefaler.hotflix.Adapters.ReviewAdapter;
-import com.example.laynefaler.hotflix.Adapters.TrailerAdapter;
+import com.example.laynefaler.hotflix.BuildConfig;
 import com.example.laynefaler.hotflix.Data.MovieContract;
 import com.example.laynefaler.hotflix.Data.MovieContract.MovieEntry;
 import com.example.laynefaler.hotflix.Data.MovieContract.TrailerEntry;
-import com.example.laynefaler.hotflix.DataTypes.MovieData;
-import com.example.laynefaler.hotflix.DataTypes.ReviewData;
-import com.example.laynefaler.hotflix.DataTypes.TrailerData;
 import com.example.laynefaler.hotflix.R;
 import com.example.laynefaler.hotflix.Utilities.Utility;
-import com.example.laynefaler.hotflix.BuildConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +24,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Vector;
 
 
@@ -38,20 +32,12 @@ import java.util.Vector;
  */
 public class FetchMovieTask {
 
-    public ArrayList<ReviewData> reviewDataArrayList = new ArrayList<ReviewData>();
-    public ArrayList<TrailerData> trailerDataArrayList = new ArrayList<TrailerData>();
-    public ArrayList<MovieData> FavoritesArrayList;
-
     public final String LOG_TAG = FetchMovieTask.class.getSimpleName();
     private String mMovieIds[];
     private Context mContext;
     private Time mDayTime = new Time();
     private int mJulianStartDay = 0;
     private String mSortByParamValue = "popular";
-
-    TrailerAdapter mTrailerAdapter;
-    ReviewAdapter mReviewAdapter;
-    MovieData currentMovie;
 
     public void loadData(Context context) {
         mContext = context;

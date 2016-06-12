@@ -23,7 +23,6 @@ public class DetailActivity extends ActionBarActivity {
             String data[] = getIntent().getStringArrayExtra(Intent.EXTRA_TEXT);
             arguments.putStringArray(Intent.EXTRA_TEXT, data);
 
-            // incorrect id
             MovieDetailFragment fragment = new MovieDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

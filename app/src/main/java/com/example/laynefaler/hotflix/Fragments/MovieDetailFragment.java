@@ -94,8 +94,6 @@ public class MovieDetailFragment extends Fragment implements android.support.v4.
     private ListView mMovieTrailersListView = null;
     private ListView mMovieReviewsListView = null;
     private Button mFavoriteButton = null;
-    private TextView mReleaseHeaderView = null;
-    private TextView mRatingHeaderView = null;
     private TextView mTrailersHeaderTextView = null;
     private TextView mReviewsHeaderTextView = null;
     private int movieId = 0;
@@ -226,8 +224,8 @@ public class MovieDetailFragment extends Fragment implements android.support.v4.
             case TRAILER_LOADER:
                 mTrailerListAdapter.swapCursor(data);
                 Utility.setDynamicHeight(mMovieTrailersListView);
-
                 break;
+
             case REVIEW_LOADER:
                 mReviewListAdapter.swapCursor(data);
                 Utility.setDynamicHeight(mMovieReviewsListView);
@@ -275,8 +273,6 @@ public class MovieDetailFragment extends Fragment implements android.support.v4.
         mFavoriteButton.setVisibility(View.INVISIBLE);
         mTrailersHeaderTextView.setVisibility(View.INVISIBLE);
         mReviewsHeaderTextView.setVisibility(View.INVISIBLE);
-        mRatingHeaderView.setVisibility(View.INVISIBLE);
-        mReleaseHeaderView.setVisibility(View.INVISIBLE);
     }
 
     @Override
