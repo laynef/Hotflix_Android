@@ -23,9 +23,9 @@ import com.example.laynefaler.hotflix.Adapters.ReviewAdapter;
 import com.example.laynefaler.hotflix.Adapters.TrailerAdapter;
 import com.example.laynefaler.hotflix.Data.MovieContract.ReviewEntry;
 import com.example.laynefaler.hotflix.Data.MovieContract.TrailerEntry;
+import com.example.laynefaler.hotflix.R;
 import com.example.laynefaler.hotflix.Sync.MovieSyncAdapter;
 import com.example.laynefaler.hotflix.Utilities.Utility;
-import com.example.laynefaler.hotflix.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
@@ -159,16 +159,15 @@ public class MovieDetailFragment extends Fragment implements android.support.v4.
                 mFavoriteButton.setText("Remove from favorite");
             }
 
+            final String youtubeBaseString = "http://www.youtube.com/watch?v=";
             mMovieTrailersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     final Cursor cursor = (Cursor) parent.getItemAtPosition(position);
                     String movieId = cursor.getString(COL_KEY);
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(TRAILER_COLUMNS[COL_SITE]));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeBaseString + movieId));
                     intent.resolveActivity(getActivity().getPackageManager());
 
-                    intent.setData(Uri.parse(TRAILER_COLUMNS[COL_SITE]));
                     startActivity(intent);
                 }
             });

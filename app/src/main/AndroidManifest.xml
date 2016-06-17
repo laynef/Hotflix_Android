@@ -15,7 +15,8 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.laynefaler.hotflix.Activities.MainActivity">
+        <activity
+            android:name="com.example.laynefaler.hotflix.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +31,8 @@
                 android:value="com.example.laynefaler.hotflix.Activities.MainActivity" />
         </activity>
 
-        <activity android:name="com.example.laynefaler.hotflix.Activities.SettingActivity"
+        <activity
+            android:name="com.example.laynefaler.hotflix.Activities.SettingActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme"
             android:parentActivityName="com.example.laynefaler.hotflix.Activities.MainActivity">

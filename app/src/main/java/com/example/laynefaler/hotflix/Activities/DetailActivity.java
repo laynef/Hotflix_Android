@@ -56,5 +56,4 @@ public class DetailActivity extends ActionBarActivity {
         return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
 
-
 }

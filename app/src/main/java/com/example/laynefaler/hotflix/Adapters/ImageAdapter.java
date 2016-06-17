@@ -9,8 +9,8 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 
 import com.example.laynefaler.hotflix.Fragments.MovieImageFragment;
-import com.example.laynefaler.hotflix.Utilities.Utility;
 import com.example.laynefaler.hotflix.R;
+import com.example.laynefaler.hotflix.Utilities.Utility;
 import com.squareup.picasso.Picasso;
 
 public class ImageAdapter extends CursorAdapter {
@@ -30,7 +30,6 @@ public class ImageAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.movie_grid_image, parent, false);
-        // or fragment_movie_image which doesn't work either
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
 
