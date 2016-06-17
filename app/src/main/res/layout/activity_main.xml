@@ -6,4 +6,3 @@
         android:layout_height="match_parent"
         android:id="@+id/main_fragment"
         class="com.example.laynefaler.hotflix.Fragments.MovieImageFragment" />
-
